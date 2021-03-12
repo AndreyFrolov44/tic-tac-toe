@@ -1,4 +1,5 @@
 from .field import Field
+import pygame
 
 
 class Game:
@@ -11,7 +12,14 @@ class Game:
         self.field.draw(self.win)
 
     def winner(self):
-        return self.field.winner()
+        winner = self.field.winner()
+        if winner is not None:
+            self.field.draw_win_line(self.win, winner[0], winner[-1])
+            return winner[0]
+        return None
+
+    def restart(self):
+        self.field.restart(self.win)
 
     def select(self, row, col):
         piece = self.field.add_piece(row, col, self.turn)

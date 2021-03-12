@@ -1,6 +1,6 @@
 import pygame
 import numpy as np
-from .constants import COLS, ROWS, SQUARE_SIZE, BLACK, WIDTH
+from .constants import COLS, ROWS, SQUARE_SIZE, BLACK, WIDTH, WHITE
 from .piece import Piece
 
 
@@ -12,7 +12,6 @@ class Field:
     def draw_line(self, win):
         for i in range(ROWS):
             x = i * SQUARE_SIZE
-
             pygame.draw.line(win, BLACK, (x, 0), (x, WIDTH), 3)
             pygame.draw.line(win, BLACK, (0, x), (WIDTH, x), 3)
             pygame.display.update()
@@ -24,6 +23,14 @@ class Field:
                 piece = self.field[row][col]
                 if piece != 0:
                     piece.draw(win)
+
+    def draw_win_line(self, win, first, last):
+        pygame.draw.line(win, BLACK, (first.x, first.y), (last.x, last.y), 4)
+
+    def restart(self, win):
+        self.field = []
+        win.fill(WHITE)
+        self.create_field()
 
     def create_field(self):
         for row in range(ROWS):
@@ -46,5 +53,5 @@ class Field:
         for win in win_arr:
             if 0 not in win:
                 if np.all(np.unique([str(w) for w in win]).size == 1):
-                    return win[0]
+                    return win[0], win[-1]
         return None
