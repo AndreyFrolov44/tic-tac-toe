@@ -16,6 +16,10 @@ class Field:
             pygame.draw.line(win, BLACK, (0, x), (WIDTH, x), 3)
             pygame.display.update()
 
+    def check_empty(self):
+        field = np.array(self.field)
+        return np.any(field == 0)
+
     def draw(self, win):
         self.draw_line(win)
         for row in range(ROWS):

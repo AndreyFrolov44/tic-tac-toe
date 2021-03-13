@@ -18,6 +18,9 @@ class Game:
             return winner[0]
         return None
 
+    def check_empty_el(self):
+        return self.field.check_empty()
+
     def restart(self):
         self.field.restart(self.win)
 
